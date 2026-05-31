@@ -1,0 +1,875 @@
+{
+  "generated_at": "2026-05-31T14:18:21Z",
+  "root": "sentera-api-wiki",
+  "nodes": [
+    {
+      "path": "query/catalog.md",
+      "url": "https://admin.sentera.com/api/docs/query/catalog/",
+      "kind": "query",
+      "title": "catalog",
+      "tags": [
+        "core",
+        "products",
+        "catalog"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/update_shape.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/update_shape/",
+      "kind": "mutation",
+      "title": "update_shape",
+      "tags": [
+        "shapes",
+        "geo",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "uploading_files/index.md",
+      "url": "https://admin.sentera.com/api/docs/uploading_files/index.html",
+      "kind": "howto",
+      "title": "index",
+      "tags": [
+        "file-upload",
+        "core",
+        "howto"
+      ],
+      "parent": null,
+      "children": [
+        "https://admin.sentera.com/api/docs/single_part/index.html",
+        "https://admin.sentera.com/api/docs/multi_part/index.html"
+      ]
+    },
+    {
+      "path": "single_part/index.md",
+      "url": "https://admin.sentera.com/api/docs/single_part/index.html",
+      "kind": "howto",
+      "title": "index",
+      "tags": [],
+      "parent": "uploading_files/index.md",
+      "children": []
+    },
+    {
+      "path": "multi_part/index.md",
+      "url": "https://admin.sentera.com/api/docs/multi_part/index.html",
+      "kind": "howto",
+      "title": "index",
+      "tags": [],
+      "parent": "uploading_files/index.md",
+      "children": []
+    },
+    {
+      "path": "authentication/index.md",
+      "url": "https://admin.sentera.com/api/docs/authentication/index.html",
+      "kind": "page",
+      "title": "index",
+      "tags": [
+        "authentication",
+        "core",
+        "howto"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "orders/index.md",
+      "url": "https://admin.sentera.com/api/docs/orders/index.html",
+      "kind": "page",
+      "title": "index",
+      "tags": [
+        "orders",
+        "analytics",
+        "core",
+        "howto"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "query/fields.md",
+      "url": "https://admin.sentera.com/api/docs/query/fields/",
+      "kind": "query",
+      "title": "fields",
+      "tags": [
+        "fields",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": [
+        "https://admin.sentera.com/api/docs/query/field/",
+        "https://admin.sentera.com/api/docs/object/fieldsqueryresult/"
+      ]
+    },
+    {
+      "path": "query/field.md",
+      "url": "https://admin.sentera.com/api/docs/query/field/",
+      "kind": "query",
+      "title": "field",
+      "tags": [],
+      "parent": "query/fields.md",
+      "children": []
+    },
+    {
+      "path": "object/fieldsqueryresult.md",
+      "url": "https://admin.sentera.com/api/docs/object/fieldsqueryresult/",
+      "kind": "object",
+      "title": "fieldsqueryresult",
+      "tags": [],
+      "parent": "query/fields.md",
+      "children": []
+    },
+    {
+      "path": "object/field.md",
+      "url": "https://admin.sentera.com/api/docs/object/field/",
+      "kind": "object",
+      "title": "field",
+      "tags": [
+        "fields",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/flighttask.md",
+      "url": "https://admin.sentera.com/api/docs/object/flighttask/",
+      "kind": "object",
+      "title": "flighttask",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/flightspecification.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightspecification/",
+      "kind": "object",
+      "title": "flightspecification",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/flightparameter.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightparameter/",
+      "kind": "object",
+      "title": "flightparameter",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/featureset.md",
+      "url": "https://admin.sentera.com/api/docs/object/featureset/",
+      "kind": "object",
+      "title": "featureset",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "input_object/flighttaskimport.md",
+      "url": "https://admin.sentera.com/api/docs/input_object/flighttaskimport/",
+      "kind": "input_object",
+      "title": "flighttaskimport",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "import",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "query/sync_flight_tasks.md",
+      "url": "https://admin.sentera.com/api/docs/query/sync_flight_tasks/",
+      "kind": "query",
+      "title": "sync_flight_tasks",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "sync",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "query/tasks.md",
+      "url": "https://admin.sentera.com/api/docs/query/tasks/",
+      "kind": "query",
+      "title": "tasks",
+      "tags": [
+        "tasks",
+        "flight-tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": [
+        "https://admin.sentera.com/api/docs/query/task/",
+        "https://admin.sentera.com/api/docs/interface/task/",
+        "https://admin.sentera.com/api/docs/object/tasksqueryresult/",
+        "https://admin.sentera.com/api/docs/enum/taskstatus/",
+        "https://admin.sentera.com/api/docs/enum/tasktype/",
+        "https://admin.sentera.com/api/docs/enum/taskprovider/",
+        "https://admin.sentera.com/api/docs/object/flightaltitude/",
+        "https://admin.sentera.com/api/docs/object/flightbuffer/",
+        "https://admin.sentera.com/api/docs/object/flightspeed/",
+        "https://admin.sentera.com/api/docs/enum/flightdirection/",
+        "https://admin.sentera.com/api/docs/enum/flightspecificationkey/",
+        "https://admin.sentera.com/api/docs/enum/aircraftheading/"
+      ]
+    },
+    {
+      "path": "query/task.md",
+      "url": "https://admin.sentera.com/api/docs/query/task/",
+      "kind": "query",
+      "title": "task",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "interface/task.md",
+      "url": "https://admin.sentera.com/api/docs/interface/task/",
+      "kind": "interface",
+      "title": "task",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "object/tasksqueryresult.md",
+      "url": "https://admin.sentera.com/api/docs/object/tasksqueryresult/",
+      "kind": "object",
+      "title": "tasksqueryresult",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "enum/taskstatus.md",
+      "url": "https://admin.sentera.com/api/docs/enum/taskstatus/",
+      "kind": "enum",
+      "title": "taskstatus",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "enum/tasktype.md",
+      "url": "https://admin.sentera.com/api/docs/enum/tasktype/",
+      "kind": "enum",
+      "title": "tasktype",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "enum/taskprovider.md",
+      "url": "https://admin.sentera.com/api/docs/enum/taskprovider/",
+      "kind": "enum",
+      "title": "taskprovider",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "object/flightaltitude.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightaltitude/",
+      "kind": "object",
+      "title": "flightaltitude",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "object/flightbuffer.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightbuffer/",
+      "kind": "object",
+      "title": "flightbuffer",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "object/flightspeed.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightspeed/",
+      "kind": "object",
+      "title": "flightspeed",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "enum/flightdirection.md",
+      "url": "https://admin.sentera.com/api/docs/enum/flightdirection/",
+      "kind": "enum",
+      "title": "flightdirection",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "enum/flightspecificationkey.md",
+      "url": "https://admin.sentera.com/api/docs/enum/flightspecificationkey/",
+      "kind": "enum",
+      "title": "flightspecificationkey",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "enum/aircraftheading.md",
+      "url": "https://admin.sentera.com/api/docs/enum/aircraftheading/",
+      "kind": "enum",
+      "title": "aircraftheading",
+      "tags": [],
+      "parent": "query/tasks.md",
+      "children": []
+    },
+    {
+      "path": "mutation/begin_tasks.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/begin_tasks/",
+      "kind": "mutation",
+      "title": "begin_tasks",
+      "tags": [
+        "tasks",
+        "flight-planning"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/upsert_flight_tasks.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/upsert_flight_tasks/",
+      "kind": "mutation",
+      "title": "upsert_flight_tasks",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "import"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/delete_tasks.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/delete_tasks/",
+      "kind": "mutation",
+      "title": "delete_tasks",
+      "tags": [
+        "tasks",
+        "flight-planning"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/create_survey.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/create_survey/",
+      "kind": "mutation",
+      "title": "create_survey",
+      "tags": [
+        "surveys",
+        "core"
+      ],
+      "parent": null,
+      "children": [
+        "https://admin.sentera.com/api/docs/object/survey/",
+        "https://admin.sentera.com/api/docs/object/surveycreatedpayload/",
+        "https://admin.sentera.com/api/docs/enum/surveystatus/",
+        "https://admin.sentera.com/api/docs/query/survey/",
+        "https://admin.sentera.com/api/docs/query/surveys/"
+      ]
+    },
+    {
+      "path": "object/survey.md",
+      "url": "https://admin.sentera.com/api/docs/object/survey/",
+      "kind": "object",
+      "title": "survey",
+      "tags": [],
+      "parent": "mutation/create_survey.md",
+      "children": []
+    },
+    {
+      "path": "object/surveycreatedpayload.md",
+      "url": "https://admin.sentera.com/api/docs/object/surveycreatedpayload/",
+      "kind": "object",
+      "title": "surveycreatedpayload",
+      "tags": [],
+      "parent": "mutation/create_survey.md",
+      "children": []
+    },
+    {
+      "path": "enum/surveystatus.md",
+      "url": "https://admin.sentera.com/api/docs/enum/surveystatus/",
+      "kind": "enum",
+      "title": "surveystatus",
+      "tags": [],
+      "parent": "mutation/create_survey.md",
+      "children": []
+    },
+    {
+      "path": "query/survey.md",
+      "url": "https://admin.sentera.com/api/docs/query/survey/",
+      "kind": "query",
+      "title": "survey",
+      "tags": [],
+      "parent": "mutation/create_survey.md",
+      "children": []
+    },
+    {
+      "path": "query/surveys.md",
+      "url": "https://admin.sentera.com/api/docs/query/surveys/",
+      "kind": "query",
+      "title": "surveys",
+      "tags": [],
+      "parent": "mutation/create_survey.md",
+      "children": []
+    },
+    {
+      "path": "mutation/begin_survey_upload.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/begin_survey_upload/",
+      "kind": "mutation",
+      "title": "begin_survey_upload",
+      "tags": [
+        "surveys",
+        "uploads",
+        "workflows",
+        "tasks"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/complete_survey_upload.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/complete_survey_upload/",
+      "kind": "mutation",
+      "title": "complete_survey_upload",
+      "tags": [
+        "surveys",
+        "uploads",
+        "workflows"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/update_order.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/update_order/",
+      "kind": "mutation",
+      "title": "update_order",
+      "tags": [
+        "orders",
+        "surveys",
+        "workflows"
+      ],
+      "parent": null,
+      "children": [
+        "https://admin.sentera.com/api/docs/object/order/",
+        "https://admin.sentera.com/api/docs/object/ordersqueryresult/",
+        "https://admin.sentera.com/api/docs/query/order/",
+        "https://admin.sentera.com/api/docs/query/orders/",
+        "https://admin.sentera.com/api/docs/input_object/ordertaskinput/",
+        "https://admin.sentera.com/api/docs/enum/orderstatus/"
+      ]
+    },
+    {
+      "path": "object/order.md",
+      "url": "https://admin.sentera.com/api/docs/object/order/",
+      "kind": "object",
+      "title": "order",
+      "tags": [],
+      "parent": "mutation/update_order.md",
+      "children": []
+    },
+    {
+      "path": "object/ordersqueryresult.md",
+      "url": "https://admin.sentera.com/api/docs/object/ordersqueryresult/",
+      "kind": "object",
+      "title": "ordersqueryresult",
+      "tags": [],
+      "parent": "mutation/update_order.md",
+      "children": []
+    },
+    {
+      "path": "query/order.md",
+      "url": "https://admin.sentera.com/api/docs/query/order/",
+      "kind": "query",
+      "title": "order",
+      "tags": [],
+      "parent": "mutation/update_order.md",
+      "children": []
+    },
+    {
+      "path": "query/orders.md",
+      "url": "https://admin.sentera.com/api/docs/query/orders/",
+      "kind": "query",
+      "title": "orders",
+      "tags": [],
+      "parent": "mutation/update_order.md",
+      "children": []
+    },
+    {
+      "path": "input_object/ordertaskinput.md",
+      "url": "https://admin.sentera.com/api/docs/input_object/ordertaskinput/",
+      "kind": "input_object",
+      "title": "ordertaskinput",
+      "tags": [],
+      "parent": "mutation/update_order.md",
+      "children": []
+    },
+    {
+      "path": "enum/orderstatus.md",
+      "url": "https://admin.sentera.com/api/docs/enum/orderstatus/",
+      "kind": "enum",
+      "title": "orderstatus",
+      "tags": [],
+      "parent": "mutation/update_order.md",
+      "children": []
+    },
+    {
+      "path": "mutation/place_order.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/place_order/",
+      "kind": "mutation",
+      "title": "place_order",
+      "tags": [
+        "orders",
+        "surveys",
+        "workflows"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/create_orders.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/create_orders/",
+      "kind": "mutation",
+      "title": "create_orders",
+      "tags": [
+        "orders"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/flightaltitude.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightaltitude/",
+      "kind": "object",
+      "title": "flightaltitude",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/flightbuffer.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightbuffer/",
+      "kind": "object",
+      "title": "flightbuffer",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/flightspeed.md",
+      "url": "https://admin.sentera.com/api/docs/object/flightspeed/",
+      "kind": "object",
+      "title": "flightspeed",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/flightdirection.md",
+      "url": "https://admin.sentera.com/api/docs/enum/flightdirection/",
+      "kind": "enum",
+      "title": "flightdirection",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/flightspecificationkey.md",
+      "url": "https://admin.sentera.com/api/docs/enum/flightspecificationkey/",
+      "kind": "enum",
+      "title": "flightspecificationkey",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/aircraftheading.md",
+      "url": "https://admin.sentera.com/api/docs/enum/aircraftheading/",
+      "kind": "enum",
+      "title": "aircraftheading",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/taskstatus.md",
+      "url": "https://admin.sentera.com/api/docs/enum/taskstatus/",
+      "kind": "enum",
+      "title": "taskstatus",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/tasktype.md",
+      "url": "https://admin.sentera.com/api/docs/enum/tasktype/",
+      "kind": "enum",
+      "title": "tasktype",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/taskprovider.md",
+      "url": "https://admin.sentera.com/api/docs/enum/taskprovider/",
+      "kind": "enum",
+      "title": "taskprovider",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "object/taskmodifiedpayload.md",
+      "url": "https://admin.sentera.com/api/docs/object/taskmodifiedpayload/",
+      "kind": "object",
+      "title": "taskmodifiedpayload",
+      "tags": [
+        "tasks",
+        "flight-planning",
+        "webhooks"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "query/feature_set.md",
+      "url": "https://admin.sentera.com/api/docs/query/feature_set/",
+      "kind": "query",
+      "title": "feature_set",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": [
+        "https://admin.sentera.com/api/docs/query/sync_feature_sets/"
+      ]
+    },
+    {
+      "path": "query/sync_feature_sets.md",
+      "url": "https://admin.sentera.com/api/docs/query/sync_feature_sets/",
+      "kind": "query",
+      "title": "sync_feature_sets",
+      "tags": [],
+      "parent": "query/feature_set.md",
+      "children": []
+    },
+    {
+      "path": "mutation/create_feature_set.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/create_feature_set/",
+      "kind": "mutation",
+      "title": "create_feature_set",
+      "tags": [
+        "feature-sets",
+        "flight-planning"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/upsert_feature_set.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/upsert_feature_set/",
+      "kind": "mutation",
+      "title": "upsert_feature_set",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "import"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/import_feature_set.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/import_feature_set/",
+      "kind": "mutation",
+      "title": "import_feature_set",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "import"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "mutation/delete_feature_sets.md",
+      "url": "https://admin.sentera.com/api/docs/mutation/delete_feature_sets/",
+      "kind": "mutation",
+      "title": "delete_feature_sets",
+      "tags": [
+        "feature-sets",
+        "flight-planning"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "input_object/featuresetimport.md",
+      "url": "https://admin.sentera.com/api/docs/input_object/featuresetimport/",
+      "kind": "input_object",
+      "title": "featuresetimport",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "import",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "input_object/featuresetownerinput.md",
+      "url": "https://admin.sentera.com/api/docs/input_object/featuresetownerinput/",
+      "kind": "input_object",
+      "title": "featuresetownerinput",
+      "tags": [
+        "feature-sets",
+        "flight-planning"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/featuresettype.md",
+      "url": "https://admin.sentera.com/api/docs/enum/featuresettype/",
+      "kind": "enum",
+      "title": "featuresettype",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/featuresetownertype.md",
+      "url": "https://admin.sentera.com/api/docs/enum/featuresetownertype/",
+      "kind": "enum",
+      "title": "featuresetownertype",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "enum/featuresetstatus.md",
+      "url": "https://admin.sentera.com/api/docs/enum/featuresetstatus/",
+      "kind": "enum",
+      "title": "featuresetstatus",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    },
+    {
+      "path": "interface/featuresetowner.md",
+      "url": "https://admin.sentera.com/api/docs/interface/featuresetowner/",
+      "kind": "interface",
+      "title": "featuresetowner",
+      "tags": [
+        "feature-sets",
+        "flight-planning",
+        "core"
+      ],
+      "parent": null,
+      "children": []
+    }
+  ],
+  "stats": {
+    "total_pages": 72,
+    "by_kind": {
+      "query": 12,
+      "mutation": 14,
+      "howto": 3,
+      "page": 2,
+      "object": 18,
+      "input_object": 4,
+      "interface": 2,
+      "enum": 17
+    }
+  }
+}

@@ -1,0 +1,90 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments (uv default is .venv)
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# uv
+# uv.lock is usually committed for reproducibility in tools and applications.
+# Uncomment the next line only if you decide not to track it.
+# uv.lock
+
+# Testing & coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+*.cover
+*.py,cover
+.hypothesis/
+
+# Type checkers & linters
+.mypy_cache/
+.pytype/
+.ruff_cache/
+dmypy.json
+
+# Jupyter
+.ipynb_checkpoints
+
+# Environments / secrets
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors & IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-*
+
+# Project-specific
+# The sentera-api-wiki/ directory contains the committed deliverable (except generated content).
+# Do not ignore it unless you change strategy to fully generated output.
+sentera-api-wiki/wiki/
+sentera-api-wiki/_archive/
+
+# Temporary / logs
+*.log
+*.tmp
+*.bak
+*.swp
