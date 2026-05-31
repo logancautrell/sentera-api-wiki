@@ -31,13 +31,6 @@ single Polygon or MultiPolygon geometry. Maximum size allowed is 250 KB. |
 | `acres` | `Float!` | **Deprecated:** Support added for metric units. Please use area instead. Amount of acreage contained in this shape. |
 | `action` | `UpsertActionType!` | Determines if it was a create or update. |
 | `area` | `Area!` | Area of the shape with the specified units. |
-
-**area arguments:**
-| Argument | Type | Description |
-|----------|------|-------------|
-| `unit` | `AreaUnitType` | The unit in which a client would like the area. |
-| `unit_system` | `UnitSystem` | The unit system in which a client would like the area. Defaults to IMPERIAL if not provided. |
-
 | `area_in_acres` | `Float!` | **Deprecated:** Support added for metric units. Please use area instead. Synonymous with acres. |
 | `color` | `HexColor!` | Hexadecimal color value of the shape in #RRGGBB format. |
 | `content_hash` | `String!` | The current content hash for this item. |
@@ -52,6 +45,13 @@ single Polygon or MultiPolygon geometry. Maximum size allowed is 250 KB. |
 | `sentera_id` | `ID!` | A system-generated key identifying a specific instance of a shape. |
 | `updated_at` | `ISO8601DateTime!` | The timestamp of when the item was last updated in the system. |
 | `updated_by` | `User` | The user who last updated this item. |
+
+
+**area arguments:**
+| Argument | Type | Description |
+|----------|------|-------------|
+| `unit` | `AreaUnitType` | The unit in which a client would like the area. |
+| `unit_system` | `UnitSystem` | The unit system in which a client would like the area. Defaults to IMPERIAL if not provided. |
 
 
 ---

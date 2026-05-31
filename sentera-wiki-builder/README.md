@@ -32,7 +32,8 @@ You can also pass arguments through:
    - Fetches the live page
    - Parses using **targeted BeautifulSoup against the site's stable component classes** (`.field-entry` etc.) — deliberately chosen middle ground between fragile regex and heavy LLM/browser tools
    - Renders rich Markdown (fields, deprecations, nested argument tables, examples, prose for howtos)
-   - Writes to the URL-derived folder tree
+   - **Lightweight structural validation** of the rendered Markdown (currently warning-only during rollout)
+   - Writes to the URL-derived folder tree (aborts the write for that page if validation ever becomes a hard failure)
 4. Generates accurate `wiki/tree.json` (canonical index for agents)
 
 ## Frontmatter Schema (per file)

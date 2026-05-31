@@ -1,21 +1,3 @@
-# Sentera API Wiki Schema (wiki_schema.yaml)
-#
-# This file defines the pages to include when generating the wiki.
-#
-# Supported structure per entry:
-#   - url:      (required) Full URL to the source documentation page
-#   - tags:     (optional) List of strings for filtering/grouping
-#   - children: (optional) List of additional URLs that belong under this entry
-#
-# Unknown/extra fields are ignored with a warning.
-# The builder will error on missing required fields or incorrect types.
-
-# Authentication (OAuth2 flow for obtaining Bearer token used in GraphQL requests)
-- url: "https://admin.sentera.com/api/docs/authentication/index.html"
-  tags: ["authentication", "core", "howto"]
-
-- url: "https://admin.sentera.com/api/docs/uploading_files/index.html"
-  tags: ["file-upload", "core", "howto"]
-  children:
-    - "https://admin.sentera.com/api/docs/single_part/index.html"
-    - "https://admin.sentera.com/api/docs/multi_part/index.html"
+# Minimal schema for investigating the update_shape Markdown table rendering bug.
+- url: "https://admin.sentera.com/api/docs/mutation/update_shape/"
+  tags: ["shapes", "geo", "core", "bug-repro"]
