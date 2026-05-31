@@ -1,3 +1,9 @@
-# Minimal schema for investigating the update_shape Markdown table rendering bug.
-- url: "https://admin.sentera.com/api/docs/mutation/update_shape/"
-  tags: ["shapes", "geo", "core", "bug-repro"]
+# Authentication (OAuth2 flow for obtaining Bearer token used in GraphQL requests)
+- url: "https://admin.sentera.com/api/docs/authentication/index.html"
+  tags: ["authentication", "core", "howto"]
+
+- url: "https://admin.sentera.com/api/docs/uploading_files/index.html"
+  tags: ["file-upload", "core", "howto"]
+  children:
+    - "https://admin.sentera.com/api/docs/single_part/index.html"
+    - "https://admin.sentera.com/api/docs/multi_part/index.html"

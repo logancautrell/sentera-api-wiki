@@ -1407,32 +1407,32 @@ def _validate_markdown(content: str, path: Path) -> list[str]:
 
     Returns a list of violation messages. Empty list means the content is clean.
 
-    This is intentionally narrow at first and focused on problems we have
-    actually observed in real output (e.g. interrupted tables from nested
-    field arguments).
+    Detects malformed or interrupted Markdown tables (e.g. a table header
+    that is not followed by a separator row `|---|`). This is more robust
+    than spacing-dependent heuristics.
     """
     violations: list[str] = []
     lines = content.splitlines()
 
-    # Simple robust check: look for a data table row followed (with at most one blank)
-    # by an arguments header. This specifically catches the old broken renderer output.
-    for i in range(len(lines) - 1):
-        current = lines[i].strip()
-        next_line = lines[i + 1].strip() if i + 1 < len(lines) else ""
-        next_next = lines[i + 2].strip() if i + 2 < len(lines) else ""
+    for i, line in enumerate(lines):
+        stripped = line.strip()
 
-        is_table_row = current.startswith("|") and not current.startswith("|---")
-        is_args_header = next_line.startswith("**") and "arguments:" in next_line.lower()
+        # Look for what appears to be a table header row
+        if stripped.startswith("|") and not stripped.startswith("|---"):
+            # Check the next non-blank line
+            j = i + 1
+            while j < len(lines) and lines[j].strip() == "":  # pragma: no cover (edge case in validator)
+                j += 1
 
-        # Also check one blank line in between
-        is_args_after_blank = next_line == "" and next_next.startswith("**") and "arguments:" in next_next.lower()
-
-        if is_table_row and (is_args_header or is_args_after_blank):
-            violations.append(
-                f"{path.name}: Interrupted table detected. "
-                "Nested argument tables are being inserted inside the main field table, producing invalid Markdown."
-            )
-            break  # only report once per file
+            if j < len(lines):
+                next_stripped = lines[j].strip()
+                # A proper table must have a separator row next (after optional blank)
+                if not (next_stripped.startswith("|---") or next_stripped.startswith("| ---")):
+                    violations.append(
+                        f"{path.name}: Malformed or interrupted Markdown table detected near line {i+1}. "
+                        "A table header row was not followed by a separator row."
+                    )
+                    break  # report once per file
 
     return violations
 

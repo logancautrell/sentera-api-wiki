@@ -764,7 +764,7 @@ def test_validate_markdown_detects_interrupted_table():
     assert bw._validate_markdown(good, Path("good.md")) == []
     violations = bw._validate_markdown(bad, Path("update_shape.md"))
     assert len(violations) >= 1
-    assert "Interrupted table" in violations[0]
+    assert "Malformed or interrupted Markdown table" in violations[0]
     assert "update_shape.md" in violations[0]
 
 
