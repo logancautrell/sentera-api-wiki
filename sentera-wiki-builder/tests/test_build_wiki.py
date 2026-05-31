@@ -759,9 +759,17 @@ def test_validate_markdown_detects_interrupted_table():
     from pathlib import Path
 
     good = """| Field | Type |\n|-------|------|\n| `foo` | `String` |\n"""
+    multi_row_good = (
+        "| Field | Type | Description |\n"
+        "|-------|------|-------------|\n"
+        "| `id` | `ID!` | The identifier |\n"
+        "| `name` | `String` | The name |\n"
+        "| `value` | `Int` | The value |\n"
+    )
     bad = """| Field | Type |\n| `area` | `Area!` |\n\n**area arguments:**\n| Argument | Type |\n| `unit` | `String` |\n\n| `other` | `Int` |\n"""
 
     assert bw._validate_markdown(good, Path("good.md")) == []
+    assert bw._validate_markdown(multi_row_good, Path("multi_row.md")) == []
     violations = bw._validate_markdown(bad, Path("update_shape.md"))
     assert len(violations) >= 1
     assert "Malformed or interrupted Markdown table" in violations[0]

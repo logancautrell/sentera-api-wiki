@@ -1407,9 +1407,10 @@ def _validate_markdown(content: str, path: Path) -> list[str]:
 
     Returns a list of violation messages. Empty list means the content is clean.
 
-    Detects malformed or interrupted Markdown tables (e.g. a table header
-    that is not followed by a separator row `|---|`). This is more robust
-    than spacing-dependent heuristics.
+    Detects malformed or interrupted Markdown tables by only considering
+    the *first* row after a non-table line as a potential header, then
+    requiring the next non-blank row to be a proper separator (`|---|`).
+    This avoids false positives on multi-row tables.
     """
     violations: list[str] = []
     lines = content.splitlines()
@@ -1417,16 +1418,29 @@ def _validate_markdown(content: str, path: Path) -> list[str]:
     for i, line in enumerate(lines):
         stripped = line.strip()
 
-        # Look for what appears to be a table header row
-        if stripped.startswith("|") and not stripped.startswith("|---"):
-            # Check the next non-blank line
+        # Only consider this row as a potential table header if the previous
+        # non-blank line was NOT itself a table row (i.e. this is the start of a table)
+        prev_non_blank = ""
+        for k in range(i - 1, -1, -1):
+            prev = lines[k].strip()
+            if prev:
+                prev_non_blank = prev
+                break
+
+        is_potential_table_start = (
+            stripped.startswith("|")
+            and not stripped.startswith("|---")
+            and not prev_non_blank.startswith("|")
+        )
+
+        if is_potential_table_start:
+            # Find the next non-blank line
             j = i + 1
-            while j < len(lines) and lines[j].strip() == "":  # pragma: no cover (edge case in validator)
+            while j < len(lines) and lines[j].strip() == "":  # pragma: no cover (edge case)
                 j += 1
 
             if j < len(lines):
                 next_stripped = lines[j].strip()
-                # A proper table must have a separator row next (after optional blank)
                 if not (next_stripped.startswith("|---") or next_stripped.startswith("| ---")):
                     violations.append(
                         f"{path.name}: Malformed or interrupted Markdown table detected near line {i+1}. "
