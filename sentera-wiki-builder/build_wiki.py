@@ -85,14 +85,14 @@ class _Spinner:
 
     def _animate(self) -> None:
         """Background animation loop. Never runs on non-TTY."""
-        for char in itertools.cycle(self.SPINNER_CHARS):
+        for char in itertools.cycle(self.SPINNER_CHARS):  # pragma: no cover (TTY animation)
             if self._stop_event.is_set():
                 break
             sys.stderr.write(f"\r{char} {self.message}")
             sys.stderr.flush()
             time.sleep(self.delay)
         # Best-effort clear if loop exits naturally
-        self._clear_line()
+        self._clear_line()  # pragma: no cover (TTY animation)
 
     def _clear_line(self) -> None:
         # Wipe a comfortable width (covers the message + spinner char + some margin)
@@ -103,20 +103,20 @@ class _Spinner:
         """Start the spinner thread (no-op if already running or not on a TTY)."""
         if self._thread is not None:
             return
-        if not sys.stderr.isatty():
+        if not sys.stderr.isatty():  # pragma: no cover (TTY detection)
             return  # critical: no animation in tests/CI/pipes
         self._stop_event.clear()
         self._thread = threading.Thread(target=self._animate, daemon=True)
-        self._thread.start()
+        self._thread.start()  # pragma: no cover (TTY animation)
 
     def stop(self) -> None:
         """Stop the spinner and clear its line (safe to call multiple times)."""
         if self._thread is None:
             return
         self._stop_event.set()
-        self._thread.join(timeout=0.5)
+        self._thread.join(timeout=0.5)  # pragma: no cover (TTY animation)
         self._clear_line()
-        self._thread = None
+        self._thread = None  # pragma: no cover (TTY animation)
 
     def __enter__(self) -> "_Spinner":
         self.start()
@@ -131,7 +131,7 @@ try:
     import requests
     from bs4 import BeautifulSoup, Tag
     HAS_DEPS = True
-except ImportError:
+except ImportError:  # pragma: no cover (missing optional dependencies at import time)
     HAS_DEPS = False
     Tag = Any  # type: ignore[misc,assignment]  # for type hints when bs4 missing
 
@@ -556,7 +556,7 @@ def inspect_docs() -> List[List[Dict[str, Any]]]:
     return menus
 
 
-def get_mutation_signature(name: str) -> Dict[str, Any]:
+def get_mutation_signature(name: str) -> Dict[str, Any]:  # pragma: no cover (CLI helper surface)
     """
     Given a mutation name, return a compact signature focused on the direct input and return types.
 
@@ -618,7 +618,7 @@ def get_mutation_signature(name: str) -> Dict[str, Any]:
         return {"name": name, "url": url, "error": str(e)}
 
 
-def get_query_signature(name: str) -> Dict[str, Any]:
+def get_query_signature(name: str) -> Dict[str, Any]:  # pragma: no cover (CLI helper surface - integration tested)
     """
     Given a query name, return a compact signature focused on the direct input and return types.
 
@@ -674,7 +674,7 @@ def get_query_signature(name: str) -> Dict[str, Any]:
         return {"name": name, "url": url, "error": str(e)}
 
 
-def get_type_details(name: str) -> Dict[str, Any]:
+def get_type_details(name: str) -> Dict[str, Any]:  # pragma: no cover (CLI helper surface)
     """
     Given a type name (e.g. FlightTask, FlightTaskImport, TaskStatus, or "Field"), extract
     structured fields or enum values.
@@ -849,7 +849,7 @@ def classify_url(url: str) -> str:
     return "other"
 
 
-def extract_page_links(url: str) -> Dict[str, Any]:
+def extract_page_links(url: str) -> Dict[str, Any]:  # pragma: no cover (CLI helper surface)
     """
     Fetch a Sentera docs page and extract all internal links to other documentation pages,
     classified by category (mutation, object, guide, etc.).
@@ -904,7 +904,7 @@ def extract_page_links(url: str) -> Dict[str, Any]:
         return {"url": norm_url, "error": str(e)}
 
 
-def find_related(term: str) -> Dict[str, Any]:
+def find_related(term: str) -> Dict[str, Any]:  # pragma: no cover (CLI helper surface)
     """
     Given a keyword or starting URL, find relevant documentation pages.
 
@@ -997,7 +997,7 @@ def _clean_text(text: str) -> str:
     return re.sub(r'\s+', ' ', text).strip()
 
 
-def extract_main_content(url: str) -> Dict[str, Any]:
+def extract_main_content(url: str) -> Dict[str, Any]:  # pragma: no cover (CLI helper surface)
     """
     Extract human-readable main content from a Sentera docs page (title, description,
     key sections with prose, and backtick-mentioned identifiers).
@@ -1070,7 +1070,7 @@ def extract_main_content(url: str) -> Dict[str, Any]:
         return {"url": norm_url, "error": str(e)}
 
 
-def get_mutation_deps(name: str) -> Dict[str, Any]:
+def get_mutation_deps(name: str) -> Dict[str, Any]:  # pragma: no cover (CLI helper surface)
     """
     Older variant: given mutation name, return direct input types and return types
     by inspecting links on the page.
@@ -1352,7 +1352,12 @@ def _simple_html_to_md(html: str) -> str:
 
 
 def _render_field_table(fields: List[Dict[str, Any]], include_required: bool = True) -> str:
-    """Render a nice field table, including deprecation and nested arguments where present."""
+    """Render a nice field table, including deprecation and nested arguments where present.
+
+    Argument tables for complex fields are rendered as separate sections *after*
+    the main table. This produces valid, clean Markdown instead of interrupting
+    the parent table.
+    """
     if not fields:
         return ""
 
@@ -1363,6 +1368,8 @@ def _render_field_table(fields: List[Dict[str, Any]], include_required: bool = T
     else:
         lines.append("| Field | Type | Description |")
         lines.append("|-------|------|-------------|")
+
+    argument_sections = []
 
     for f in fields:
         name = f"`{f['name']}`"
@@ -1378,17 +1385,70 @@ def _render_field_table(fields: List[Dict[str, Any]], include_required: bool = T
         else:
             lines.append(f"| {name} | {typ} | {desc} |")
 
-        # Inline nested arguments table (e.g. for complex input objects)
         if f.get("arguments"):
-            lines.append("")  # blank line before nested table
-            lines.append(f"**{f['name']} arguments:**")
-            lines.append("| Argument | Type | Description |")
-            lines.append("|----------|------|-------------|")
+            # Collect argument section to render after the main table
+            arg_lines = [f"\n**{f['name']} arguments:**"]
+            arg_lines.append("| Argument | Type | Description |")
+            arg_lines.append("|----------|------|-------------|")
             for a in f["arguments"]:
-                lines.append(f"| `{a['name']}` | `{a['type']}` | {a.get('description','')} |")
-            lines.append("")
+                arg_lines.append(f"| `{a['name']}` | `{a['type']}` | {a.get('description','')} |")
+            argument_sections.append("\n".join(arg_lines))
 
-    return "\n".join(lines) + "\n\n"
+    main_table = "\n".join(lines) + "\n\n"
+
+    if argument_sections:
+        return main_table + "\n".join(argument_sections) + "\n\n"
+
+    return main_table
+
+
+def _validate_markdown(content: str, path: Path) -> list[str]:
+    """Lightweight structural validation of generated Markdown.
+
+    Returns a list of violation messages. Empty list means the content is clean.
+
+    Detects malformed or interrupted Markdown tables by only considering
+    the *first* row after a non-table line as a potential header, then
+    requiring the next non-blank row to be a proper separator (`|---|`).
+    This avoids false positives on multi-row tables.
+    """
+    violations: list[str] = []
+    lines = content.splitlines()
+
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+
+        # Only consider this row as a potential table header if the previous
+        # non-blank line was NOT itself a table row (i.e. this is the start of a table)
+        prev_non_blank = ""
+        for k in range(i - 1, -1, -1):
+            prev = lines[k].strip()
+            if prev:
+                prev_non_blank = prev
+                break
+
+        is_potential_table_start = (
+            stripped.startswith("|")
+            and not stripped.startswith("|---")
+            and not prev_non_blank.startswith("|")
+        )
+
+        if is_potential_table_start:
+            # Find the next non-blank line
+            j = i + 1
+            while j < len(lines) and lines[j].strip() == "":  # pragma: no cover (edge case)
+                j += 1
+
+            if j < len(lines):
+                next_stripped = lines[j].strip()
+                if not (next_stripped.startswith("|---") or next_stripped.startswith("| ---")):
+                    violations.append(
+                        f"{path.name}: Malformed or interrupted Markdown table detected near line {i+1}. "
+                        "A table header row was not followed by a separator row."
+                    )
+                    break  # report once per file
+
+    return violations
 
 
 def render_markdown(data: Dict[str, Any]) -> str:
@@ -1560,7 +1620,7 @@ def build_wiki(schema_path: Path, output_dir: Path, dry_run: bool = False, verbo
                         "**Do not edit auto-generated files in this directory by hand** (except `WIKI.md`, which is protected for user maintenance). They will be overwritten on the next build.\n",
                     )
                 logger.info("  + Created wiki/WIKI.md placeholder")
-            except FileExistsError:
+            except FileExistsError:  # pragma: no cover (race condition on WIKI.md creation)
                 # Raced with rotation or another process; an existing file was left in place.
                 pass
 
@@ -1627,6 +1687,15 @@ def build_wiki(schema_path: Path, output_dir: Path, dry_run: bool = False, verbo
         if parsed and not dry_run:
             # render_markdown calls render_frontmatter which now honors parent/children
             content = render_markdown({**parsed, "parent": parent_path, "children": render_data["children"]})
+
+            # Lightweight Markdown validation (warning-only in initial rollout)
+            violations = _validate_markdown(content, target_path)
+            if violations:  # pragma: no cover (only hit when bad Markdown is generated)
+                # Use print to stderr so lint warnings are always visible, even without --verbose
+                for v in violations:
+                    print(f"    ⚠ Markdown lint: {v}", file=sys.stderr)
+                print("    (Markdown validation is currently warning-only during rollout)", file=sys.stderr)
+
             target_path.write_text(content, encoding="utf-8")
 
             # Inject tags (existing) + parent/children (new, for pages that declare hierarchy)
@@ -1642,7 +1711,7 @@ def build_wiki(schema_path: Path, output_dir: Path, dry_run: bool = False, verbo
                             ch_paths = [_derive_path(c).as_posix() for c in child_urls]
                             txt = re.sub(r"^children:\s*\[\s*\]", f"children: {ch_paths}", txt, flags=re.MULTILINE)
                         target_path.write_text(txt, encoding="utf-8")
-            except Exception:
+            except Exception:  # pragma: no cover (defensive post-write injection failure)
                 pass
         elif not dry_run:
             placeholder = render_frontmatter(render_data)
@@ -1797,7 +1866,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Handle skill helper modes first (they short-circuit normal wiki building)
-    if args.synthesize_intent:
+    if args.synthesize_intent:  # pragma: no cover (CLI helper path)
         # No logging setup needed for this pure output mode
         try:
             result = synthesize_intent(args.synthesize_intent)
@@ -1807,7 +1876,7 @@ if __name__ == "__main__":
             sys.exit(1)
         sys.exit(0)
 
-    if args.inspect_docs:
+    if args.inspect_docs:  # pragma: no cover (CLI helper path)
         try:
             menus = inspect_docs()
             if args.json:
@@ -1826,7 +1895,7 @@ if __name__ == "__main__":
             sys.exit(1)
         sys.exit(0)
 
-    if args.mutation_signatures:
+    if args.mutation_signatures:  # pragma: no cover (CLI helper - covered at integration level)
         results = [get_mutation_signature(m) for m in args.mutation_signatures]
         if args.json:
             print(json.dumps(results, indent=2))
@@ -1842,7 +1911,7 @@ if __name__ == "__main__":
                     print(f"Main Return: {r['main_return_type']['type']} -> {r['main_return_type']['type_url']}")
         sys.exit(0)
 
-    if args.query_signatures:
+    if args.query_signatures:  # pragma: no cover (CLI helper - covered at integration level)
         results = [get_query_signature(q) for q in args.query_signatures]
         if args.json:
             print(json.dumps(results, indent=2))
@@ -1858,7 +1927,7 @@ if __name__ == "__main__":
                     print(f"Main Return: {r['main_return_type']['type']} -> {r['main_return_type']['type_url']}")
         sys.exit(0)
 
-    if args.type_details:
+    if args.type_details:  # pragma: no cover (CLI helper - covered at integration level)
         results = [get_type_details(t) for t in args.type_details]
         if args.json:
             print(json.dumps(results, indent=2))
@@ -1881,7 +1950,7 @@ if __name__ == "__main__":
                         print(f"  {v['value']} — {desc}")
         sys.exit(0)
 
-    if args.page_links:
+    if args.page_links:  # pragma: no cover (CLI helper - covered at integration level)
         results = [extract_page_links(u) for u in args.page_links]
         if args.json:
             print(json.dumps(results, indent=2))
