@@ -8,17 +8,22 @@ Produces objective stats to guide the manual truth audit.
 Run from repo root (ensures deps via builder env):
     cd sentera-wiki-builder && uv run python ../.agents/skills/wiki-agent-validation/scripts/audit_report.py
 
+Point at any generated wiki tree (e.g. FieldAgent tools wiki):
+    uv run python ../.agents/skills/wiki-agent-validation/scripts/audit_report.py \\
+      --wiki-root /path/to/sentera-api-wiki/wiki
+
 Or after a build:
     cd sentera-wiki-builder && ./scripts/dev.sh
     uv run python ../.agents/skills/wiki-agent-validation/scripts/audit_report.py
 """
 
+import argparse
 import json
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import yaml
 
@@ -26,8 +31,7 @@ import yaml
 # (e.g. run via `cd sentera-wiki-builder && uv run python ../.agents/...`)
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent.parent.parent.parent
-WIKI_ROOT = REPO_ROOT / "sentera-api-wiki" / "wiki"
-META_TREE = WIKI_ROOT / "tree.json"
+DEFAULT_WIKI_ROOT = REPO_ROOT / "sentera-api-wiki" / "wiki"
 
 # Rough patterns for the current renderer output
 INPUT_HEADING = re.compile(r"^## Input Fields", re.MULTILINE)
@@ -64,12 +68,12 @@ def count_lines_in_section(text: str, heading: str) -> int:
     return len(match.group(0).splitlines())
 
 
-def analyze_page(md_path: Path) -> Dict[str, Any]:
+def analyze_page(md_path: Path, wiki_root: Path) -> Dict[str, Any]:
     text = md_path.read_text(encoding="utf-8")
     fm = parse_frontmatter(text)
 
     analysis: Dict[str, Any] = {
-        "path": str(md_path.relative_to(WIKI_ROOT)),
+        "path": str(md_path.relative_to(wiki_root)),
         "title": fm.get("title"),
         "kind": fm.get("kind"),
         "last_fetched": fm.get("last_fetched"),
@@ -89,6 +93,10 @@ def analyze_page(md_path: Path) -> Dict[str, Any]:
     if RETURN_HEADING.search(text):
         analysis["return_fields"] = count_table_rows(text, "## Return Fields")
 
+    # Also count "## Fields" tables (object/enum pages use this heading)
+    if re.search(r"^## Fields\b", text, re.MULTILINE) and analysis["return_fields"] == 0:
+        analysis["return_fields"] = count_table_rows(text, "## Fields")
+
     if EXAMPLES_HEADING.search(text):
         analysis["example_lines"] = count_lines_in_section(text, "## Examples")
 
@@ -98,24 +106,41 @@ def analyze_page(md_path: Path) -> Dict[str, Any]:
     return analysis
 
 
-def main() -> None:
-    if not WIKI_ROOT.exists():
-        print(f"ERROR: {WIKI_ROOT} does not exist. Run the builder first.")
+def main(argv: Optional[List[str]] = None) -> None:
+    parser = argparse.ArgumentParser(
+        description="Pre-flight automated analysis of a generated Sentera API wiki."
+    )
+    parser.add_argument(
+        "--wiki-root",
+        type=Path,
+        default=None,
+        help=(
+            "Path to a generated wiki/ directory (contains tree.json and *.md). "
+            f"Default: {DEFAULT_WIKI_ROOT}"
+        ),
+    )
+    args = parser.parse_args(argv)
+
+    wiki_root: Path = (args.wiki_root or DEFAULT_WIKI_ROOT).resolve()
+    meta_tree = wiki_root / "tree.json"
+
+    if not wiki_root.exists():
+        print(f"ERROR: {wiki_root} does not exist. Run the builder first.")
         sys.exit(1)
 
-    pages = sorted(p for p in WIKI_ROOT.rglob("*.md") if p.name != "WIKI.md")
+    pages = sorted(p for p in wiki_root.rglob("*.md") if p.name != "WIKI.md")
 
     print("=" * 70)
     print("WIKI AGENT VALIDATION — PRE-FLIGHT AUDIT REPORT")
     print(f"Generated: {datetime.now().isoformat(timespec='seconds')}")
-    print(f"Wiki root: {WIKI_ROOT}")
+    print(f"Wiki root: {wiki_root}")
     print("=" * 70)
     print()
 
     results: List[Dict[str, Any]] = []
     for p in pages:
         try:
-            res = analyze_page(p)
+            res = analyze_page(p, wiki_root)
             results.append(res)
         except Exception as e:
             print(f"Failed to analyze {p}: {e}")
@@ -127,7 +152,7 @@ def main() -> None:
         bloat = "⚠️ YES" if r["example_bloat"] else "no"
         print(
             f"{r['path']:<35} "
-            f"{r['kind']:<8} "
+            f"{str(r['kind'] or '?'):<8} "
             f"{r['input_fields']:>4} "
             f"{r['return_fields']:>4} "
             f"{r['example_lines']:>7} "
@@ -157,15 +182,17 @@ def main() -> None:
             print(f"  Flags: {', '.join(flags)}")
 
     # Tree sanity
-    if META_TREE.exists():
+    if meta_tree.exists():
         try:
-            tree = json.loads(META_TREE.read_text()) or {}
+            tree = json.loads(meta_tree.read_text()) or {}
             print(f"\ntree.json sanity:")
             print(f"  Total nodes: {len(tree.get('nodes', []))}")
             print(f"  Generated at: {tree.get('generated_at')}")
             print(f"  Stats: {tree.get('stats')}")
         except Exception as e:
             print(f"Failed to read tree.json: {e}")
+    else:
+        print(f"\nWARNING: no tree.json at {meta_tree}")
 
     print("\n" + "=" * 70)
     print("NEXT STEPS FOR MANUAL AUDIT:")

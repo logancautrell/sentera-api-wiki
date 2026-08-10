@@ -34,7 +34,10 @@ Verify that `sentera-api-wiki/` faithfully represents `wiki_schema.yaml` from ht
 
 ## Helpers
 - Builder: `sentera-wiki-builder/scripts/run.sh`
-- Automated report: `cd sentera-wiki-builder && uv run python ../.agents/skills/wiki-agent-validation/scripts/audit_report.py`
+- Automated report (default in-repo wiki):  
+  `cd sentera-wiki-builder && uv run python ../.agents/skills/wiki-agent-validation/scripts/audit_report.py`
+- Automated report against any scrape output:  
+  `…/audit_report.py --wiki-root /path/to/wiki`
 
 ## Sign-off
 Mark validated only when all listed pages exist, `tree.json` matches schema, no critical omissions or fabrications, and layout rules are followed. Document findings clearly.
